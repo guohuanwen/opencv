@@ -1,0 +1,23 @@
+{
+  "buildFiles": [
+    "/Users/huanwenguo/Library/Android/sdk/ndk/21.3.6528147/build/cmake/android.toolchain.cmake",
+    "/Users/huanwenguo/Library/Android/sdk/ndk/21.3.6528147/build/cmake/platforms.cmake",
+    "/Users/huanwenguo/work/c/OpenCV-android-sdk/samples/tutorial-2-mixedprocessing/jni/../../../sdk/native/jni/abi-x86/OpenCVConfig.cmake",
+    "/Users/huanwenguo/work/c/OpenCV-android-sdk/samples/tutorial-2-mixedprocessing/jni/../../../sdk/native/jni/OpenCVConfig.cmake",
+    "/Users/huanwenguo/work/c/OpenCV-android-sdk/samples/tutorial-2-mixedprocessing/jni/CMakeLists.txt",
+    "/Users/huanwenguo/work/c/OpenCV-android-sdk/samples/tutorial-2-mixedprocessing/jni/../../../sdk/native/jni/OpenCVConfig-version.cmake",
+    "/Users/huanwenguo/work/c/OpenCV-android-sdk/samples/tutorial-2-mixedprocessing/jni/../../../sdk/native/jni/abi-x86/OpenCVModules.cmake",
+    "/Users/huanwenguo/work/c/OpenCV-android-sdk/samples/tutorial-2-mixedprocessing/jni/../../../sdk/native/jni/abi-x86/OpenCVModules-release.cmake"
+  ],
+  "cleanCommands": [
+    "/Users/huanwenguo/Library/Android/sdk/cmake/3.10.2.4988404/bin/cmake --build /Users/huanwenguo/work/c/OpenCV-android-sdk/samples/tutorial-2-mixedprocessing/.externalNativeBuild/cmake/debug/x86 --target clean"
+  ],
+  "libraries": {
+    "mixed_sample-Debug-x86": {
+      "artifactName": "mixed_sample",
+      "buildCommand": "/Users/huanwenguo/Library/Android/sdk/cmake/3.10.2.4988404/bin/cmake --build /Users/huanwenguo/work/c/OpenCV-android-sdk/samples/tutorial-2-mixedprocessing/.externalNativeBuild/cmake/debug/x86 --target mixed_sample",
+      "abi": "x86",
+      "output": "/Users/huanwenguo/work/c/OpenCV-android-sdk/samples/tutorial-2-mixedprocessing/build/intermediates/cmake/debug/obj/x86/libmixed_sample.so"
+    }
+  }
+}

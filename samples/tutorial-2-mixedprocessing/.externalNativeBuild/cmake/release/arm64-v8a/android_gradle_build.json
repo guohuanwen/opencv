@@ -1,0 +1,45 @@
+{
+  "stringTable": {
+    "0": "/Users/huanwenguo/work/c/OpenCV-android-sdk/samples/tutorial-2-mixedprocessing/.externalNativeBuild/cmake/release/arm64-v8a",
+    "1": "--target=aarch64-none-linux-android21 --gcc-toolchain=/Users/huanwenguo/Library/Android/sdk/ndk/21.3.6528147/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/huanwenguo/Library/Android/sdk/ndk/21.3.6528147/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Dmixed_sample_EXPORTS -I/Users/huanwenguo/work/c/OpenCV-android-sdk/samples/tutorial-2-mixedprocessing/jni -isystem /Users/huanwenguo/work/c/OpenCV-android-sdk/sdk/native/jni/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -O2 -DNDEBUG -fPIC"
+  },
+  "buildFiles": [
+    "/Users/huanwenguo/Library/Android/sdk/ndk/21.3.6528147/build/cmake/android.toolchain.cmake",
+    "/Users/huanwenguo/work/c/OpenCV-android-sdk/samples/tutorial-2-mixedprocessing/jni/../../../sdk/native/jni/abi-arm64-v8a/OpenCVModules.cmake",
+    "/Users/huanwenguo/Library/Android/sdk/ndk/21.3.6528147/build/cmake/platforms.cmake",
+    "/Users/huanwenguo/work/c/OpenCV-android-sdk/samples/tutorial-2-mixedprocessing/jni/../../../sdk/native/jni/abi-arm64-v8a/OpenCVModules-release.cmake",
+    "/Users/huanwenguo/work/c/OpenCV-android-sdk/samples/tutorial-2-mixedprocessing/jni/../../../sdk/native/jni/OpenCVConfig.cmake",
+    "/Users/huanwenguo/work/c/OpenCV-android-sdk/samples/tutorial-2-mixedprocessing/jni/CMakeLists.txt",
+    "/Users/huanwenguo/work/c/OpenCV-android-sdk/samples/tutorial-2-mixedprocessing/jni/../../../sdk/native/jni/OpenCVConfig-version.cmake",
+    "/Users/huanwenguo/work/c/OpenCV-android-sdk/samples/tutorial-2-mixedprocessing/jni/../../../sdk/native/jni/abi-arm64-v8a/OpenCVConfig.cmake"
+  ],
+  "cleanCommands": [
+    "/Users/huanwenguo/Library/Android/sdk/cmake/3.10.2.4988404/bin/cmake --build /Users/huanwenguo/work/c/OpenCV-android-sdk/samples/tutorial-2-mixedprocessing/.externalNativeBuild/cmake/release/arm64-v8a --target clean"
+  ],
+  "libraries": {
+    "mixed_sample-Release-arm64-v8a": {
+      "buildCommand": "/Users/huanwenguo/Library/Android/sdk/cmake/3.10.2.4988404/bin/cmake --build /Users/huanwenguo/work/c/OpenCV-android-sdk/samples/tutorial-2-mixedprocessing/.externalNativeBuild/cmake/release/arm64-v8a --target mixed_sample",
+      "buildType": "release",
+      "toolchain": "3359627505",
+      "abi": "arm64-v8a",
+      "artifactName": "mixed_sample",
+      "files": [
+        {
+          "src": "/Users/huanwenguo/work/c/OpenCV-android-sdk/samples/tutorial-2-mixedprocessing/jni/jni_part.cpp",
+          "flagsOrdinal": 1,
+          "workingDirectoryOrdinal": 0
+        }
+      ],
+      "output": "/Users/huanwenguo/work/c/OpenCV-android-sdk/samples/tutorial-2-mixedprocessing/build/intermediates/cmake/release/obj/arm64-v8a/libmixed_sample.so"
+    }
+  },
+  "toolchains": {
+    "3359627505": {
+      "cppCompilerExecutable": "/Users/huanwenguo/Library/Android/sdk/ndk/21.3.6528147/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++"
+    }
+  },
+  "cFileExtensions": [],
+  "cppFileExtensions": [
+    "cpp"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "buildFiles": [
+    "/Users/huanwenguo/work/c/OpenCV-android-sdk/sdk/libcxx_helper/../../../../../Library/Android/sdk/ndk/21.3.6528147/build/cmake/android.toolchain.cmake",
+    "/Users/huanwenguo/work/c/OpenCV-android-sdk/sdk/libcxx_helper/../../../../../Library/Android/sdk/ndk/21.3.6528147/build/cmake/platforms.cmake",
+    "/Users/huanwenguo/work/c/OpenCV-android-sdk/sdk/libcxx_helper/CMakeLists.txt"
+  ],
+  "cleanCommands": [
+    "/Users/huanwenguo/Library/Android/sdk/cmake/3.10.2.4988404/bin/cmake --build /Users/huanwenguo/work/c/OpenCV-android-sdk/sdk/.externalNativeBuild/cmake/release/x86_64 --target clean"
+  ],
+  "libraries": {
+    "opencv_jni_shared-Release-x86_64": {
+      "artifactName": "opencv_jni_shared",
+      "buildCommand": "/Users/huanwenguo/Library/Android/sdk/cmake/3.10.2.4988404/bin/cmake --build /Users/huanwenguo/work/c/OpenCV-android-sdk/sdk/.externalNativeBuild/cmake/release/x86_64 --target opencv_jni_shared",
+      "abi": "x86_64",
+      "output": "/Users/huanwenguo/work/c/OpenCV-android-sdk/sdk/.externalNativeBuild/cmake/release/x86_64/libopencv_jni_shared.a"
+    }
+  }
+}
