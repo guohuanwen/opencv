@@ -13,8 +13,10 @@ import org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Core;
+import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfRect;
+import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
@@ -50,7 +52,7 @@ public class FdActivity extends CameraActivity implements CvCameraViewListener2 
     private CascadeClassifier      mJavaDetector;
     private DetectionBasedTracker  mNativeDetector;
 
-    private int                    mDetectorType       = JAVA_DETECTOR;
+    private int                    mDetectorType       = NATIVE_DETECTOR;
     private String[]               mDetectorName;
 
     private float                  mRelativeFaceSize   = 0.2f;
@@ -130,6 +132,7 @@ public class FdActivity extends CameraActivity implements CvCameraViewListener2 
         mOpenCvCameraView = (CameraBridgeViewBase) findViewById(R.id.fd_activity_surface_view);
         mOpenCvCameraView.setVisibility(CameraBridgeViewBase.VISIBLE);
         mOpenCvCameraView.setCvCameraViewListener(this);
+        mOpenCvCameraView.setCameraIndex(CameraBridgeViewBase.CAMERA_ID_FRONT);
     }
 
     @Override
@@ -163,20 +166,33 @@ public class FdActivity extends CameraActivity implements CvCameraViewListener2 
         mOpenCvCameraView.disableView();
     }
 
+    @Override
     public void onCameraViewStarted(int width, int height) {
         mGray = new Mat();
         mRgba = new Mat();
     }
 
+    @Override
     public void onCameraViewStopped() {
         mGray.release();
         mRgba.release();
     }
 
+    @Override
     public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
 
         mRgba = inputFrame.rgba();
         mGray = inputFrame.gray();
+
+        Mat output = new Mat(mRgba.rows(), mRgba.cols(), CvType.CV_8UC3);
+        Log.i(TAG, "onCameraFrame: " + mRgba.width() + " " + mRgba.height());
+        int outWidth = mRgba.width();
+        int outHeight = mRgba.height();
+
+        Core.rotate(mRgba, mRgba, Core.ROTATE_90_COUNTERCLOCKWISE);
+        Core.rotate(mGray, mGray, Core.ROTATE_90_COUNTERCLOCKWISE);
+
+        Log.i(TAG, "onCameraFrame1: " + mRgba.width() + " " + mRgba.height());
 
         if (mAbsoluteFaceSize == 0) {
             int height = mGray.rows();
@@ -202,12 +218,36 @@ public class FdActivity extends CameraActivity implements CvCameraViewListener2 
         }
 
         Rect[] facesArray = faces.toArray();
-        for (int i = 0; i < facesArray.length; i++)
+        for (int i = 0; i < facesArray.length; i++) {
+            Log.i(TAG, "onCameraFrame: found ");
             Imgproc.rectangle(mRgba, facesArray[i].tl(), facesArray[i].br(), FACE_RECT_COLOR, 3);
+        }
 
+        Log.i(TAG, "onCameraFrame2: " + mRgba.width() + " " + mRgba.height());
+        Core.flip(mRgba, mRgba, 1);
+//        Core.rotate(mRgba, mRgba, Core.ROTATE_90_CLOCKWISE);
+        Log.i(TAG, "onCameraFrame3: " + mRgba.width() + " " + mRgba.height());
         return mRgba;
+
+//        Mat rotateMat = Imgproc.getRotationMatrix2D(new Point(mRgba.rows() / 2,mRgba.cols()/ 2), 0, 1);
+//        Imgproc.warpAffine(mRgba, output, rotateMat, output.size());
+//        Log.i(TAG, "onCameraFrame4: " + output.width() + " " + output.height());
+//        return output;
+
+
+
     }
 
+//
+//        480
+//
+//
+//864
+//        480
+//    266
+//        480
+//
+//        480
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         Log.i(TAG, "called onCreateOptionsMenu");

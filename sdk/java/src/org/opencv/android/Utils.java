@@ -1,7 +1,11 @@
 package org.opencv.android;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.hardware.Camera;
+import android.util.Log;
+import android.view.Surface;
 
 import org.opencv.core.CvException;
 import org.opencv.core.CvType;
@@ -136,4 +140,34 @@ public class Utils {
     private static native void nBitmapToMat2(Bitmap b, long m_addr, boolean unPremultiplyAlpha);
 
     private static native void nMatToBitmap2(long m_addr, Bitmap b, boolean premultiplyAlpha);
+
+    public static void setCameraDisplayOrientation(Activity activity, int cameraId, android.hardware.Camera camera) {
+        android.hardware.Camera.CameraInfo info = new android.hardware.Camera.CameraInfo();
+        android.hardware.Camera.getCameraInfo(cameraId, info);
+        int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
+        int degrees = 0;
+        switch (rotation) {
+            case Surface.ROTATION_0:
+                degrees = 0;
+                break;
+            case Surface.ROTATION_90:
+                degrees = 90;
+                break;
+            case Surface.ROTATION_180:
+                degrees = 180;
+                break;
+            case Surface.ROTATION_270:
+                degrees = 270;
+                break;
+        }
+        int result;
+        if (info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+            result = (info.orientation + degrees) % 360;
+            result = (360 - result) % 360;   // compensate the mirror
+        } else {
+            // back-facing
+            result = (info.orientation - degrees + 360) % 360;
+        }
+        camera.setDisplayOrientation(result);
+    }
 }
