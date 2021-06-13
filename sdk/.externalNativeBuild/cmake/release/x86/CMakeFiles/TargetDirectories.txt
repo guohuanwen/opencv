@@ -1,3 +1,0 @@
-/Users/huanwenguo/work/c/OpenCV-android-sdk/sdk/.externalNativeBuild/cmake/release/x86/CMakeFiles/rebuild_cache.dir
-/Users/huanwenguo/work/c/OpenCV-android-sdk/sdk/.externalNativeBuild/cmake/release/x86/CMakeFiles/edit_cache.dir
-/Users/huanwenguo/work/c/OpenCV-android-sdk/sdk/.externalNativeBuild/cmake/release/x86/CMakeFiles/opencv_jni_shared.dir
