@@ -13,7 +13,6 @@ import org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Core;
-import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfRect;
 import org.opencv.core.Point;
@@ -35,37 +34,37 @@ import android.view.WindowManager;
 
 public class FdActivity extends CameraActivity implements CvCameraViewListener2 {
 
-    private static final String    TAG                 = "OCVSample::Activity";
-    private static final Scalar    FACE_RECT_COLOR     = new Scalar(0, 255, 0, 255);
-    public static final int        JAVA_DETECTOR       = 0;
-    public static final int        NATIVE_DETECTOR     = 1;
+    private static final String TAG = "OCVSample::Activity";
+    private static final Scalar FACE_RECT_COLOR = new Scalar(0, 255, 0, 255);
+    public static final int JAVA_DETECTOR = 0;
+    public static final int NATIVE_DETECTOR = 1;
 
-    private MenuItem               mItemFace50;
-    private MenuItem               mItemFace40;
-    private MenuItem               mItemFace30;
-    private MenuItem               mItemFace20;
-    private MenuItem               mItemType;
+    private MenuItem mItemFace50;
+    private MenuItem mItemFace40;
+    private MenuItem mItemFace30;
+    private MenuItem mItemFace20;
+    private MenuItem mItemType;
 
-    private Mat                    mRgba;
-    private Mat                    mGray;
-    private File                   mCascadeFile;
-    private CascadeClassifier      mJavaDetector;
-    private DetectionBasedTracker  mNativeDetector;
+    private Mat mRgba;
+    private Mat mGray;
+    private File mCascadeFile;
+    private CascadeClassifier mJavaDetector;
+    private DetectionBasedTracker mNativeDetector;
 
-    private int                    mDetectorType       = NATIVE_DETECTOR;
-    private String[]               mDetectorName;
+    private int mDetectorType = JAVA_DETECTOR;
+    private String[] mDetectorName;
 
-    private float                  mRelativeFaceSize   = 0.2f;
-    private int                    mAbsoluteFaceSize   = 0;
+    private float mRelativeFaceSize = 0.2f;
+    private int mAbsoluteFaceSize = 0;
 
-    private CameraBridgeViewBase   mOpenCvCameraView;
+    private CameraBridgeViewBase mOpenCvCameraView;
+    private int viewWidth, viewHeight;
 
-    private BaseLoaderCallback  mLoaderCallback = new BaseLoaderCallback(this) {
+    private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
         @Override
         public void onManagerConnected(int status) {
             switch (status) {
-                case LoaderCallbackInterface.SUCCESS:
-                {
+                case LoaderCallbackInterface.SUCCESS: {
                     Log.i(TAG, "OpenCV loaded successfully");
 
                     // Load native library after(!) OpenCV initialization
@@ -103,11 +102,12 @@ public class FdActivity extends CameraActivity implements CvCameraViewListener2 
                     }
 
                     mOpenCvCameraView.enableView();
-                } break;
-                default:
-                {
+                }
+                break;
+                default: {
                     super.onManagerConnected(status);
-                } break;
+                }
+                break;
             }
         }
     };
@@ -120,7 +120,9 @@ public class FdActivity extends CameraActivity implements CvCameraViewListener2 
         Log.i(TAG, "Instantiated new " + this.getClass());
     }
 
-    /** Called when the activity is first created. */
+    /**
+     * Called when the activity is first created.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         Log.i(TAG, "called onCreate");
@@ -133,19 +135,25 @@ public class FdActivity extends CameraActivity implements CvCameraViewListener2 
         mOpenCvCameraView.setVisibility(CameraBridgeViewBase.VISIBLE);
         mOpenCvCameraView.setCvCameraViewListener(this);
         mOpenCvCameraView.setCameraIndex(CameraBridgeViewBase.CAMERA_ID_FRONT);
+
+        mOpenCvCameraView.post(new Runnable() {
+            @Override
+            public void run() {
+                viewWidth = mOpenCvCameraView.getWidth();
+                viewHeight = mOpenCvCameraView.getHeight();
+            }
+        });
     }
 
     @Override
-    public void onPause()
-    {
+    public void onPause() {
         super.onPause();
         if (mOpenCvCameraView != null)
             mOpenCvCameraView.disableView();
     }
 
     @Override
-    public void onResume()
-    {
+    public void onResume() {
         super.onResume();
         if (!OpenCVLoader.initDebug()) {
             Log.d(TAG, "Internal OpenCV library not found. Using OpenCV Manager for initialization");
@@ -184,10 +192,7 @@ public class FdActivity extends CameraActivity implements CvCameraViewListener2 
         mRgba = inputFrame.rgba();
         mGray = inputFrame.gray();
 
-        Mat output = new Mat(mRgba.rows(), mRgba.cols(), CvType.CV_8UC3);
         Log.i(TAG, "onCameraFrame: " + mRgba.width() + " " + mRgba.height());
-        int outWidth = mRgba.width();
-        int outHeight = mRgba.height();
 
         Core.rotate(mRgba, mRgba, Core.ROTATE_90_COUNTERCLOCKWISE);
         Core.rotate(mGray, mGray, Core.ROTATE_90_COUNTERCLOCKWISE);
@@ -208,12 +213,10 @@ public class FdActivity extends CameraActivity implements CvCameraViewListener2 
             if (mJavaDetector != null)
                 mJavaDetector.detectMultiScale(mGray, faces, 1.1, 2, 2, // TODO: objdetect.CV_HAAR_SCALE_IMAGE
                         new Size(mAbsoluteFaceSize, mAbsoluteFaceSize), new Size());
-        }
-        else if (mDetectorType == NATIVE_DETECTOR) {
+        } else if (mDetectorType == NATIVE_DETECTOR) {
             if (mNativeDetector != null)
                 mNativeDetector.detect(mGray, faces);
-        }
-        else {
+        } else {
             Log.e(TAG, "Detection method is not selected!");
         }
 
@@ -227,18 +230,16 @@ public class FdActivity extends CameraActivity implements CvCameraViewListener2 
         Core.flip(mRgba, mRgba, 1);
 //        Core.rotate(mRgba, mRgba, Core.ROTATE_90_CLOCKWISE);
         Log.i(TAG, "onCameraFrame3: " + mRgba.width() + " " + mRgba.height());
+
+        if (viewWidth > 0 && viewHeight > 0) {
+            Mat rotateMat = Imgproc.getRotationMatrix2D(new Point(0, 0),
+                    0, Math.max(viewWidth / mRgba.width(), viewHeight / mRgba.height()));
+            Imgproc.warpAffine(mRgba, mRgba, rotateMat, new Size(viewWidth, viewHeight));
+        }
         return mRgba;
-
-//        Mat rotateMat = Imgproc.getRotationMatrix2D(new Point(mRgba.rows() / 2,mRgba.cols()/ 2), 0, 1);
-//        Imgproc.warpAffine(mRgba, output, rotateMat, output.size());
-//        Log.i(TAG, "onCameraFrame4: " + output.width() + " " + output.height());
-//        return output;
-
-
-
     }
 
-//
+    //
 //        480
 //
 //
@@ -255,7 +256,7 @@ public class FdActivity extends CameraActivity implements CvCameraViewListener2 
         mItemFace40 = menu.add("Face size 40%");
         mItemFace30 = menu.add("Face size 30%");
         mItemFace20 = menu.add("Face size 20%");
-        mItemType   = menu.add(mDetectorName[mDetectorType]);
+        mItemType = menu.add(mDetectorName[mDetectorType]);
         return true;
     }
 
